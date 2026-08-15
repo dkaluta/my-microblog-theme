@@ -7,6 +7,11 @@
        come before the unqualified dark fallback. Matches dkaluta.com. */}}
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
   <meta name="theme-color" content="#1d1f21">
+  {{/* Same terminal-prompt favicon as dkaluta.com: SVG for modern browsers,
+       32px PNG fallback, opaque 180px icon for iOS home screens. */}}
+  <link rel="icon" href="{{ "favicon.svg" | relURL }}" type="image/svg+xml">
+  <link rel="icon" href="{{ "favicon-32.png" | relURL }}" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="{{ "apple-touch-icon.png" | relURL }}">
   {{/* Latin → Source Code Pro; Hebrew → Cascadia Code (which ships Hebrew
        glyphs) via font-stack fallthrough. One combined Google Fonts request. */}}
   <link rel="preconnect" href="https://fonts.googleapis.com">
