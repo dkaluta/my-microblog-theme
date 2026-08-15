@@ -1,5 +1,5 @@
 {
 	"version": "1.0.0",
-	"title": "dksh (Sumo fork)",
+	"title": "my-microblog-theme",
 	"description": "Terminal-styled fork of Matt Langford's Sumo Theme for blog.dkaluta.com — dkaluta.com's 16-color ANSI palette, auto light/dark via prefers-color-scheme, RTL/Hebrew support with Cascadia Code."
 }

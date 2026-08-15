@@ -1,4 +1,4 @@
-# dksh theme for Micro.blog
+# my-microblog-theme
 
 A [Micro.blog](https://micro.blog) theme for [blog.dkaluta.com](https://blog.dkaluta.com),
 restyled to match the terminal aesthetic of [dkaluta.com](https://dkaluta.com)
