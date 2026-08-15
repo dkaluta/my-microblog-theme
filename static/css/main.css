@@ -780,6 +780,22 @@ body {
 	padding: 1rem 0 0;
 }
 
+/* On phones, match the main site's mobile TUI: drop the framed window and
+   go full-bleed, keeping just the title bar. (Same 48rem breakpoint.) */
+@media (max-width: 48rem) {
+	body {
+		padding: 0;
+	}
+
+	.tty {
+		max-width: 100%;
+		margin: 0;
+		border: none;
+		border-radius: 0;
+		min-height: 100vh;
+	}
+}
+
 /* ── Header as a prompt line ── */
 .site-header {
 	margin-top: 0.5rem;
