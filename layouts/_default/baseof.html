@@ -4,17 +4,27 @@
 {{ partial "head.html" . }}
 
 <body>
-  {{ partial "header.html" . }}
-
-  <div class="page-content">
-    <div class="wrapper">
-      {{ block "main" . }}{{ end }}
+  <div class="tty">
+    <div class="tty-bar" aria-hidden="true">
+      <span class="dot dot-r"></span>
+      <span class="dot dot-y"></span>
+      <span class="dot dot-g"></span>
+      <span class="tty-title">{{ replaceRE "^https?://([^/]+).*$" "$1" .Site.BaseURL }} — dksh</span>
     </div>
-    {{ if templates.Exists "partials/microhook-below-wrapper.html" }}
-          {{ partial "microhook-below-wrapper.html" . }}
-    {{ end }}
+    <div class="tty-body">
+      {{ partial "header.html" . }}
+
+      <div class="page-content">
+        <div class="wrapper">
+          {{ block "main" . }}{{ end }}
+        </div>
+        {{ if templates.Exists "partials/microhook-below-wrapper.html" }}
+              {{ partial "microhook-below-wrapper.html" . }}
+        {{ end }}
+      </div>
+      {{ partial "footer.html" . }}
+    </div>
   </div>
-  {{ partial "footer.html" . }}
 
   {{ range .Site.Params.plugins_js }}
   <script src="{{ . }}"></script>

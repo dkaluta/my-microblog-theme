@@ -15,11 +15,11 @@
     </div>
     {{ end }}
     {{ if .Title }}
-    <h2 class="p-name post-title">{{ .Title }}</h2>
+    <h2 class="p-name post-title" dir="auto">{{ .Title }}</h2>
     {{ end }}
   </header>
 
-  <article class="post-content e-content {{ if .Title }}with-title{{ else }}without-title{{ end }}">
+  <article dir="auto" class="post-content e-content {{ if .Title }}with-title{{ else }}without-title{{ end }}">
     {{ .Content }}
   </article>
 

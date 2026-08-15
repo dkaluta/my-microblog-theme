@@ -1,5 +1,5 @@
 {
-	"version": "1.2.11",
-	"title": "Sumo Theme",
-	"description": "Sumo Theme is a powerful and opinionated theme available only for Micro.blog. Visit sumo.micro.blog for documentation and demos. Follow @mtt on Micro.blog."
+	"version": "1.0.0",
+	"title": "dksh (Sumo fork)",
+	"description": "Terminal-styled fork of Matt Langford's Sumo Theme for blog.dkaluta.com — dkaluta.com's 16-color ANSI palette, auto light/dark via prefers-color-scheme, RTL/Hebrew support with Cascadia Code."
 }

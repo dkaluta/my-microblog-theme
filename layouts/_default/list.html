@@ -22,9 +22,9 @@
           </div>
           {{ end }}
           {{ if .Title }}
-              <h2 class="post-title p-name"><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+              <h2 class="post-title p-name" dir="auto"><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
                   {{ if in .RawContent "<!--more-->" }}
-                      <div class="p-summary">
+                      <div class="p-summary" dir="auto">
                           {{ $splitContents := split .RawContent "<!--more-->" }}
                           {{ $summary := index $splitContents 0 }}
                           {{ $summary := replaceRE "\\[\\^.*?\\]" "" $summary }}
@@ -39,16 +39,16 @@
                           </a></p>
                       </div>
                   {{ else if .Params.custom_summary }}
-                  <div class="p-summary">
+                  <div class="p-summary" dir="auto">
                       <p>{{ .Summary | safeHTML }}<p>
                   </div>
                   {{ else }}
-                      <div class="e-content with-title">
+                      <div class="e-content with-title" dir="auto">
                           {{ .Content }}
                       </div>
                   {{ end }}
           {{ else }}
-              <div class="e-content without-title">
+              <div class="e-content without-title" dir="auto">
                   {{ .Content }}
               </div>
           {{ end }}
