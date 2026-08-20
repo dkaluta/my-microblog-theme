@@ -6,6 +6,7 @@
      retry link is a plain feed: link. Hugo 0.91-safe. */}}
 {{ $feed := "feed.xml" | absURL }}
 <details class="follow" id="follow"
+  data-feed="{{ $feed }}"
   data-ok="{{ T "follow ok" }}"
   data-none="{{ T "follow none" }}">
   <summary class="follow-summary">follow</summary>
@@ -27,7 +28,9 @@
     var box = document.getElementById('follow');
     var status = document.getElementById('follow-status');
     if (!box || !status) return;
-    var feed = {{ $feed | jsonify }};
+    /* Read from the attribute, not a templated JS literal — Go's JS-context
+       auto-escaping double-quotes jsonify output (feed:"…" broke readers). */
+    var feed = box.getAttribute('data-feed');
     var busy = false;
 
     function attempt() {
