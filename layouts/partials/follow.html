@@ -1,0 +1,72 @@
+{{/* Follow button. Opening it tries the visitor's newsreader through the
+     feed: URL scheme (which RSS apps register a handler for) and watches
+     whether the page loses focus — the tell that an app answered. When
+     nothing does, the panel's explainer tells the visitor what a
+     newsreader is. Degrades without JS: <details> still opens, and the
+     retry link is a plain feed: link. Hugo 0.91-safe. */}}
+{{ $feed := "feed.xml" | absURL }}
+<details class="follow" id="follow"
+  data-ok="{{ T "follow ok" }}"
+  data-none="{{ T "follow none" }}">
+  <summary class="follow-summary">follow</summary>
+  <div class="follow-panel">
+    <p class="follow-status" id="follow-status" dir="ltr" aria-live="polite">$ open feed:{{ $feed }}</p>
+    <p class="follow-explainer" dir="auto">{{ T "follow explainer" }}</p>
+    <ul class="follow-readers" dir="auto">
+      <li><a href="https://netnewswire.com">NetNewsWire</a> <span class="follow-platform">Mac / iOS</span></li>
+      <li><a href="https://play.google.com/store/apps/details?id=com.nononsenseapps.feeder.play">Feeder</a> <span class="follow-platform">Android</span></li>
+      <li><a href="https://hyliu.me/fluent-reader/">Fluent Reader</a> <span class="follow-platform">Windows</span></li>
+    </ul>
+    <p class="follow-explainer" dir="auto">{{ T "follow feed lead" }}</p>
+    <p class="follow-feed" dir="ltr"><code>{{ $feed }}</code></p>
+    <p class="follow-actions"><a class="button" id="follow-retry" href="feed:{{ $feed }}">{{ T "follow retry" }}</a></p>
+  </div>
+</details>
+<script>
+  (function () {
+    var box = document.getElementById('follow');
+    var status = document.getElementById('follow-status');
+    if (!box || !status) return;
+    var feed = {{ $feed | jsonify }};
+    var busy = false;
+
+    function attempt() {
+      if (busy) return;
+      busy = true;
+      status.textContent = '$ open feed:' + feed;
+      /* Only focus lost DURING the probe window counts — a tab that was
+         already backgrounded must not read as "an app answered". */
+      var away = false;
+      var mark = function () { away = true; };
+      var onVis = function () { if (document.hidden) away = true; };
+      window.addEventListener('blur', mark);
+      document.addEventListener('visibilitychange', onVis);
+      /* A hidden iframe fires the scheme without navigating the page;
+         browsers with no feed: handler simply do nothing. */
+      var probe = document.createElement('iframe');
+      probe.style.display = 'none';
+      probe.src = 'feed:' + feed;
+      document.body.appendChild(probe);
+      window.setTimeout(function () {
+        window.removeEventListener('blur', mark);
+        document.removeEventListener('visibilitychange', onVis);
+        if (probe.parentNode) probe.parentNode.removeChild(probe);
+        status.textContent = away
+          ? 'ok: ' + box.getAttribute('data-ok')
+          : box.getAttribute('data-none');
+        busy = false;
+      }, 1400);
+    }
+
+    box.addEventListener('toggle', function () {
+      if (box.open) attempt();
+    });
+    var retry = document.getElementById('follow-retry');
+    if (retry) {
+      retry.addEventListener('click', function (e) {
+        e.preventDefault();
+        attempt();
+      });
+    }
+  })();
+</script>

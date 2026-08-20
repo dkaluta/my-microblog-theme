@@ -15,5 +15,10 @@
     "Designed with love": "Designed with <span class=\"red\">♥</span> by",
     "Theme": "Theme",
     "based on": "Based on",
-    "by": "by"
+    "by": "by",
+    "follow ok": "handed this blog to your newsreader",
+    "follow none": "no newsreader answered.",
+    "follow explainer": "a newsreader (RSS app) gathers new posts from every site you follow into one quiet inbox — no algorithm, no ads, nothing to sign up for. good free ones:",
+    "follow feed lead": "point any of them at this feed:",
+    "follow retry": "try the newsreader again"
 }
