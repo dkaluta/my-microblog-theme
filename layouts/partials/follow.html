@@ -5,13 +5,17 @@
      newsreader is. Degrades without JS: <details> still opens, and the
      retry link is a plain feed: link. Hugo 0.91-safe. */}}
 {{ $feed := "feed.xml" | absURL }}
+{{/* Legacy authority form (feed://host/path): readers like Lire implement
+     the scheme by swapping feed→http, which mangles the wrapped form
+     (feed:https://… became http:https://…). All majors take feed://. */}}
+{{ $feedLink := replaceRE "^https?://" "feed://" $feed }}
 <details class="follow" id="follow"
   data-feed="{{ $feed }}"
   data-ok="{{ T "follow ok" }}"
   data-none="{{ T "follow none" }}">
   <summary class="follow-summary">follow</summary>
   <div class="follow-panel">
-    <p class="follow-status" id="follow-status" dir="ltr" aria-live="polite">$ open feed:{{ $feed }}</p>
+    <p class="follow-status" id="follow-status" dir="ltr" aria-live="polite">$ open {{ $feedLink }}</p>
     <p class="follow-explainer" dir="auto">{{ T "follow explainer" }}</p>
     <ul class="follow-readers" dir="auto">
       <li><a href="https://netnewswire.com">NetNewsWire</a> <span class="follow-platform">Mac / iOS</span></li>
@@ -20,7 +24,9 @@
     </ul>
     <p class="follow-explainer" dir="auto">{{ T "follow feed lead" }}</p>
     <p class="follow-feed" dir="ltr"><code>{{ $feed }}</code></p>
-    <p class="follow-actions"><a class="button" id="follow-retry" href="feed:{{ $feed }}">{{ T "follow retry" }}</a></p>
+    {{/* safeURL: the feed:// scheme isn't on Go's href allowlist and would
+         otherwise be replaced with #ZgotmplZ. */}}
+    <p class="follow-actions"><a class="button" id="follow-retry" href="{{ $feedLink | safeURL }}">{{ T "follow retry" }}</a></p>
   </div>
 </details>
 <script>
@@ -31,12 +37,14 @@
     /* Read from the attribute, not a templated JS literal — Go's JS-context
        auto-escaping double-quotes jsonify output (feed:"…" broke readers). */
     var feed = box.getAttribute('data-feed');
+    /* feed://host/path, matching the template's $feedLink (see above). */
+    var feedLink = 'feed://' + feed.replace(/^https?:\/\//, '');
     var busy = false;
 
     function attempt() {
       if (busy) return;
       busy = true;
-      status.textContent = '$ open feed:' + feed;
+      status.textContent = '$ open ' + feedLink;
       /* Only focus lost DURING the probe window counts — a tab that was
          already backgrounded must not read as "an app answered". */
       var away = false;
@@ -48,7 +56,7 @@
          browsers with no feed: handler simply do nothing. */
       var probe = document.createElement('iframe');
       probe.style.display = 'none';
-      probe.src = 'feed:' + feed;
+      probe.src = feedLink;
       document.body.appendChild(probe);
       window.setTimeout(function () {
         window.removeEventListener('blur', mark);
