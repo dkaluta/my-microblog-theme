@@ -4,7 +4,7 @@
      nothing does, the panel's explainer tells the visitor what a
      newsreader is. Degrades without JS: <details> still opens, and the
      retry link is a plain feed: link. Hugo 0.91-safe. */}}
-{{ $feed := "feed.xml" | absURL }}
+{{ $feed := "feed.json" | absURL }}
 {{/* Legacy authority form (feed://host/path): readers like Lire implement
      the scheme by swapping feed→http, which mangles the wrapped form
      (feed:https://… became http:https://…). All majors take feed://. */}}
@@ -23,7 +23,9 @@
       <li><a href="https://hyliu.me/fluent-reader/">Fluent Reader</a> <span class="follow-platform">Windows</span></li>
     </ul>
     <p class="follow-explainer" dir="auto">{{ T "follow feed lead" }}</p>
-    <p class="follow-feed" dir="ltr"><code>{{ $feed }}</code></p>
+    <ul class="follow-feeds" dir="ltr">
+      <li><a href="{{ $feed }}"><code>{{ $feed }}</code></a> <span class="follow-platform">JSON Feed</span></li>
+    </ul>
     {{/* safeURL: the feed:// scheme isn't on Go's href allowlist and would
          otherwise be replaced with #ZgotmplZ. */}}
     <p class="follow-actions"><a class="button" id="follow-retry" href="{{ $feedLink | safeURL }}">{{ T "follow retry" }}</a></p>

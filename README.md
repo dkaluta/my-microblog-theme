@@ -28,10 +28,10 @@ please consider [supporting Matt's work](https://sumo.micro.blog).
 - **ISO dates** (`2006-01-02`) by default; override with the standard
   `dateFormatLong` / `dateFormatShort` params.
 - **Follow button** (`./follow` in the header): tries to open the visitor's
-  newsreader via the `feed:` scheme; when none answers, the panel explains
+  newsreader via the `feed://` scheme; when none answers, the panel explains
   what a newsreader is and suggests free ones per platform (NetNewsWire,
-  Feeder, Fluent Reader) plus the raw feed URL. Localized, and usable
-  without JS (`<details>` + a plain `feed:` link).
+  Feeder, Fluent Reader) plus the JSON Feed URL. Localized, and usable
+  without JS (`<details>` + a plain `feed://` link).
 - Targets **Hugo 0.91** (the Micro.blog engine version).
 
 ## Credits & license

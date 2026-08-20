@@ -986,15 +986,25 @@ footer.site-footer {
 	unicode-bidi: plaintext;
 }
 
-.follow-readers {
+.follow-readers,
+.follow-feeds {
 	list-style: none;
 	margin: 0 0 0.6em;
 	padding: 0;
 }
 
-.follow-readers li::before {
+.follow-readers li::before,
+.follow-feeds li::before {
 	content: '- ';
 	color: var(--muted);
+}
+
+.follow-feeds {
+	margin-bottom: 0.8em;
+}
+
+.follow-feeds li {
+	overflow-wrap: anywhere;
 }
 
 .follow-platform {
@@ -1002,12 +1012,7 @@ footer.site-footer {
 	font-size: 0.9em;
 }
 
-.follow-feed {
-	margin: 0 0 0.8em;
-	overflow-wrap: anywhere;
-}
-
-.follow-feed code {
+.follow-feeds code {
 	background-color: var(--code-background);
 	border: 1px solid var(--code-border);
 	border-radius: 3px;
